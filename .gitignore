@@ -1,0 +1,16 @@
+bin/
+evals/
+build/
+dist/
+lib/
+include/
+data.csv
+config.json
+pyvenv.cfg
+thabit.egg-info/
+__pycache__/
+.DS_Store
+.vscode
+.idea
+.env
+**/__pycache__/
