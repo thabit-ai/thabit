@@ -6,6 +6,10 @@ Evaluate multiple LLM models with the same data to determine which one is better
 
 ## Test
 
+```shell
+pytest tests
+```
+
 ## Contribute
 
 ## Docs
