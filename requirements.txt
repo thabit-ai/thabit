@@ -4,6 +4,7 @@ annotated-types==0.7.0
 anyio==4.4.0
 async-timeout==4.0.3
 attrs==23.2.0
+black==24.4.2
 certifi==2024.7.4
 click==8.1.7
 colorama==0.4.6
@@ -15,16 +16,23 @@ h11==0.14.0
 httpcore==1.0.5
 httpx==0.27.0
 idna==3.7
+iniconfig==2.0.0
 Levenshtein==0.25.1
 markdown-it-py==3.0.0
 mdurl==0.1.2
 multidict==6.0.5
+mypy-extensions==1.0.0
 numpy==1.24.4
 openai==1.37.0
+packaging==24.1
 pandas==2.0.3
+pathspec==0.12.1
+platformdirs==4.2.2
+pluggy==1.5.0
 pydantic==2.8.2
 pydantic_core==2.20.1
 Pygments==2.18.0
+pytest==8.3.2
 python-dateutil==2.9.0.post0
 python-Levenshtein==0.25.1
 pytz==2024.1
@@ -35,8 +43,9 @@ sniffio==1.3.1
 tabulate==0.9.0
 terminaltables==3.1.10
 terminaltables3==4.0.0
-# Editable install with no version control (thabit==0.1)
+# Editable Git install with no remote (thabit==0.1)
 -e /Users/orasal-kubaisi/dev/cli-eval
+tomli==2.0.1
 tqdm==4.66.4
 typing_extensions==4.12.2
 tzdata==2024.1
