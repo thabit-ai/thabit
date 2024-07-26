@@ -42,7 +42,14 @@ def cli():
 )
 @click.option("--data", default="data.csv", help="Path to the data CSV file.")
 def eval(config, data):
-    asyncio.run(run_evaluation(config, data))
+    try:
+        # load config data
+        config = load_config(config)
+        # run evaluation
+        asyncio.run(run_evaluation(config, data))
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise e
 
 
 if __name__ == "__main__":

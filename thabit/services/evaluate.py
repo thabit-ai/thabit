@@ -20,16 +20,15 @@ console = Console()
 
 
 # Main asynchronous function to run the evaluation
-async def evaluate_models(config_file, data_file):
-    config = load_config(config_file)
+async def evaluate_models(config_data, data):
     data = pd.read_csv(data_file)
     results = []
     total_input_tokens = 0
     total_output_tokens = 0
 
     tasks = []
-    for model in config["models"]:
-        model_params = config["global_parameters"].copy()
+    for model in config_data["models"]:
+        model_params = config_data["global_parameters"].copy()
         model_params.update(model)
         openai_params = initialize_openai(model_params)
         model_short_name = model["model_short_name"]

@@ -10,7 +10,9 @@ def load_config(file_path):
     """
     try:
         with open(file_path, "r") as file:
-            return json.load(file)
+            data = json.load(file)
+            if validate_config(data):
+                return data
     except FileNotFoundError:
         logger.error(f"Configuration file not found: {file_path}")
         raise FileNotFoundError(f"Configuration file not found: {file_path}")
@@ -61,3 +63,4 @@ def validate_config(config):
             if key not in model:
                 logger.error(f"Model is missing required key: {key}")
                 raise ValueError(f"Model is missing required key: {key}")
+    return True
