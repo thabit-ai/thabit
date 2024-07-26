@@ -17,7 +17,7 @@ import textwrap
 from tqdm import tqdm
 from thabit.evaluators.eval import evaluate_output
 from thabit.utils.llm import initialize_openai, call_ai_model
-from thabit.utils.load import load_config
+from thabit.utils.load import load_config, validate_config
 from thabit.services.evaluate import run_evaluation
 from thabit.utils.cli import display_results, display_best_model
 from thabit.utils.llm import determine_best_model
@@ -45,11 +45,13 @@ def eval(config, data):
     try:
         # load config data
         config = load_config(config)
-        # run evaluation
-        asyncio.run(run_evaluation(config, data))
+        # validate config data
+        if validate_config(config):
+            # run evaluation
+            asyncio.run(run_evaluation(config, data))
     except Exception as e:
-        console.print(f"[red]Error: {e}[/red]")
-        raise e
+        console.print(f"[red]Error: {str(e)}[/red]")
+        exit(1)
 
 
 if __name__ == "__main__":

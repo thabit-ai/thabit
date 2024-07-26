@@ -13,4 +13,14 @@ def get_logger():
         enqueue=True,
         catch=True,
     )
+    logger.add(
+        "./logs/error.log",
+        rotation="1 MB",
+        retention="10 days",
+        compression="zip",
+        level="ERROR",
+        format="{time} {level} [{extra[function]}] {message}",
+        enqueue=True,
+        catch=True,
+    )
     return logger

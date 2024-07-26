@@ -21,7 +21,7 @@ console = Console()
 
 # Main asynchronous function to run the evaluation
 async def evaluate_models(config_data, data):
-    data = pd.read_csv(data_file)
+    data = pd.read_csv(data)
     results = []
     total_input_tokens = 0
     total_output_tokens = 0
@@ -68,11 +68,11 @@ async def evaluate_models(config_data, data):
 
     progress_bar.close()
 
-    return results, config
+    return results, config_data
 
 
-async def run_evaluation(config_file, data_file):
-    results, config = await evaluate_models(config_file, data_file)
+async def run_evaluation(config, data_file):
+    results, config = await evaluate_models(config, data_file)
     header, table_data = format_results_for_display(results, config)
     display_results(header, table_data)
     best_model, best_accuracy = determine_best_model(results)
