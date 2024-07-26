@@ -7,6 +7,7 @@ from rich.text import Text
 
 console = Console()
 
+
 def format_results_for_display(results, config):
     context_output = {}
     for result in results:

@@ -1,6 +1,7 @@
 import openai
 import aiohttp
 
+
 # Initialize OpenAI API for each model
 def initialize_openai(model_config):
     """

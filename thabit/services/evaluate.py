@@ -18,6 +18,7 @@ from rich.console import Console
 
 console = Console()
 
+
 # Main asynchronous function to run the evaluation
 async def evaluate_models(config_file, data_file):
     config = load_config(config_file)
@@ -35,9 +36,7 @@ async def evaluate_models(config_file, data_file):
 
         for index, row in data.iterrows():
             task = asyncio.ensure_future(
-                call_ai_model(
-                    model, model_short_name, row["context"], openai_params
-                )
+                call_ai_model(model, model_short_name, row["context"], openai_params)
             )
             tasks.append((model, row, task))
 
