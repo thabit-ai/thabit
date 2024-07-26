@@ -1,0 +1,39 @@
+{
+    "models":[
+    {
+        "provider": "OpenAI",
+        "model": "gpt-4o",
+        "model_short_name": "GPT-4o",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "api_key": "test"
+    },
+    {
+        "provider": "OpenAI",
+        "model": "gpt-4o-mini",
+        "model_short_name": "GPT-4o-mini",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "api_key": "test"
+    },
+    {
+        "provider": "DeepSeek",
+        "model": "deepseek-chat",
+        "model_short_name": "DeepSeek-Chat",
+        "endpoint": "https://api.deepseek.com/v1/chat/completions",
+        "api_key": "test"
+    },
+    {
+        "provider": "FireworksAI",
+        "model": "accounts/fireworks/models/llama-v3p1-405b-instruct",
+        "model_short_name": "Llama 3.1 3405b",
+        "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+        "api_key": "test"
+    }
+],
+    "global_parameters":{
+        "temperature": 1,
+        "max_tokens": 200,
+        "top_p": 1,
+        "frequency_penalty": 0,
+        "presence_penalty": 0
+    }
+}
