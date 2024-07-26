@@ -1,6 +1,6 @@
 # setup.py
 from setuptools import setup, find_packages
-import pathlib
+import os
 
 
 def read_requirements(file_path):
@@ -10,8 +10,7 @@ def read_requirements(file_path):
         ]
 
 
-base_dir = pathlib.Path(__file__).parent.resolve()
-requirements_path = base_dir / "requirements.txt"
+requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 setup(
     name="thabit",
@@ -31,5 +30,5 @@ setup(
         "LLM",
         "Evaluation",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.6",
 )

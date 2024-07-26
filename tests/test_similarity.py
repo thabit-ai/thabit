@@ -1,6 +1,7 @@
 import unittest
 from thabit.evaluation.similarity import similarity
 
+
 class TestSimilarity(unittest.TestCase):
 
     def test_similarity(self):
@@ -18,5 +19,9 @@ class TestSimilarity(unittest.TestCase):
         ]
 
         for output, expected_output, threshold, expected_result in test_cases:
-            with self.subTest(output=output, expected_output=expected_output, threshold=threshold):
-                self.assertEqual(similarity(output, expected_output, threshold), expected_result)
+            with self.subTest(
+                output=output, expected_output=expected_output, threshold=threshold
+            ):
+                self.assertEqual(
+                    similarity(output, expected_output, threshold), expected_result
+                )

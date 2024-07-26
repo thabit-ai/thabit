@@ -10,6 +10,12 @@ Evaluate multiple LLM models with the same data to determine which one is better
 pytest tests
 ```
 
+## Build
+
+```shell
+pip3 install build
+```
+
 ## Contribute
 
 ## Docs
@@ -24,7 +30,3 @@ pytest tests
   - Util folder for Validating Dataset, versioning datasets.
 - Visualise adding a dataset (using UI to populate).
 - Visulaise Output (using UI).
-- Show progress in the CLI
-  - Show total input tokens.
-  - Show total output tokens.
-  - Show total cost.

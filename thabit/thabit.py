@@ -1,6 +1,5 @@
 import openai
 import pandas as pd
-from fuzzywuzzy import fuzz
 import click
 import json
 import asyncio
@@ -16,6 +15,9 @@ from rich.text import Text
 from rich.align import Align
 import textwrap
 from tqdm import tqdm
+from thabit.evaluators.eval import evaluate_output
+from thabit.utils.llm import initialize_openai, call_ai_model
+from thabit.utils.load import load_config
 
 # Initialize colorama
 init()
@@ -23,60 +25,10 @@ init()
 # Initialize rich console
 console = Console()
 
-
-# Load configuration from JSON file
-def load_config(file_path):
-    with open(file_path, "r") as file:
-        return json.load(file)
-
-
-# Initialize OpenAI API for each model
-def initialize_openai(model_config):
-    openai.api_key = model_config["api_key"]
-    params = model_config.copy()
-    del params["provider"]
-    del params["model"]
-    del params["endpoint"]
-    del params["api_key"]
-    del params["model_short_name"]
-    return params
-
-
-# Evaluate the output based on the evaluation method
-def evaluate_output(output, expected_output, evaluation_method, threshold=80):
-    if evaluation_method.strip() == "Exact":
-        return str(output).strip() == str(expected_output).strip()
-    elif evaluation_method == "Has word(s)":
-        return all(word in output for word in expected_output.split())
-    elif evaluation_method.strip() == "Similarity":
-        similarity = fuzz.token_sort_ratio(output, expected_output)
-        return similarity >= threshold
-    return False
-
-
-# Asynchronous function to call the AI model
-async def call_ai_model(session, model, model_short_name, context, openai_params):
-    prompt = "You are a helpful AI assistant. I will ask you a question and I want you to return the direct answer without explaining. If the question is about a number, yes/no, or a simple true/false, return required value with no explanation."
-    url = model["endpoint"]
-    headers = {
-        "Authorization": f"Bearer {model['api_key']}",
-        "Content-Type": "application/json",
-    }
-    data = {
-        "model": model["model"],
-        "messages": [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": context},
-        ],
-        **openai_params,
-    }
-    async with session.post(url, headers=headers, json=data) as response:
-        result = await response.json()
-        return result["choices"][0]["message"]["content"].strip()
-
-
 # Main asynchronous function to run the evaluation
-async def run_evaluation(config_file, data_file):
+
+
+async def evaluate_models(config_file, data_file):
     config = load_config(config_file)
     data = pd.read_csv(data_file)
     results = []
@@ -128,7 +80,10 @@ async def run_evaluation(config_file, data_file):
 
         progress_bar.close()
 
-    # Reformat results for table
+    return results, config
+
+
+def format_results_for_display(results, config):
     context_output = {}
     for result in results:
         context = result["Context"]
@@ -141,7 +96,6 @@ async def run_evaluation(config_file, data_file):
             }
         context_output[context][model] = (passed, result["Output"])
 
-    # Prepare table data
     header = ["Context", "Expected Output", "Evaluation Method"] + [
         model["model_short_name"] for model in config["models"]
     ]
@@ -160,7 +114,10 @@ async def run_evaluation(config_file, data_file):
                 row.append("[red]✘[/red]")
         table_data.append(row)
 
-    # Print the table using rich
+    return header, table_data
+
+
+def display_results(header, table_data):
     table = Table(title="Evaluation Results")
     for column in header:
         table.add_column(column)
@@ -168,7 +125,8 @@ async def run_evaluation(config_file, data_file):
         table.add_row(*row)
     console.print(table)
 
-    # Determine the best model
+
+def determine_best_model(results):
     model_accuracy = {}
     for result in results:
         model = result["Model"]
@@ -186,7 +144,10 @@ async def run_evaluation(config_file, data_file):
             best_accuracy = accuracy
             best_model = model
 
-    # Display the best model in a boxed markup
+    return best_model, best_accuracy
+
+
+def display_best_model(best_model, best_accuracy):
     centered_text = Text(justify="center")
     centered_text.append(f"🏆 ")
     centered_text.append(f"{best_model} ", style="bold green")
@@ -202,6 +163,14 @@ async def run_evaluation(config_file, data_file):
     )
     centered_panel = Align.center(panel)
     console.print(centered_panel)
+
+
+async def run_evaluation(config_file, data_file):
+    results, config = await evaluate_models(config_file, data_file)
+    header, table_data = format_results_for_display(results, config)
+    display_results(header, table_data)
+    best_model, best_accuracy = determine_best_model(results)
+    display_best_model(best_model, best_accuracy)
 
     # Save results to a JSON file with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
@@ -265,9 +234,11 @@ def compare_evaluations(file1, file2):
                     "Context": res1["Context"],
                     "Expected Output": res1["Expected Output"],
                     "Evaluation Method": res1["Evaluation Method"],
-                    "Passed": f"[green]✔[/green] => [red]✘[/red]"
-                    if res1["Passed"] == "✔"
-                    else f"[red]✘[/red] => [green]✔[/green]",
+                    "Passed": (
+                        f"[green]✔[/green] => [red]✘[/red]"
+                        if res1["Passed"] == "✔"
+                        else f"[red]✘[/red] => [green]✔[/green]"
+                    ),
                 }
             )
 
