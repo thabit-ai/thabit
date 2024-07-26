@@ -29,6 +29,7 @@ init()
 # Initialize rich console
 console = Console()
 
+
 # CLI interface using Click
 @click.group()
 def cli():

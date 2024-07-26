@@ -3,7 +3,6 @@ from thabit.evaluators.similarity import similarity
 
 
 class TestSimilarity(unittest.TestCase):
-
     def test_similarity(self):
         test_cases = [
             ("Hello world", "Hello world", 80, True),

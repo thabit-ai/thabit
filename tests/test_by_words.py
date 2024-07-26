@@ -3,7 +3,6 @@ from thabit.evaluators.by_words import has_all_words, has_some_words, has_no_wor
 
 
 class TestByWords(unittest.TestCase):
-
     def test_has_all_words(self):
         test_cases = [
             ("Hello world", "Hello world", True),

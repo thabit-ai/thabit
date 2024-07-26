@@ -13,7 +13,9 @@ logger = get_logger()
 def format_results_for_display(results, config):
     context_output = {}
     current_logger = logger.bind(function="format_results_for_display")
-    current_logger.debug(f"Formatting results for display with the following data: {results}")
+    current_logger.debug(
+        f"Formatting results for display with the following data: {results}"
+    )
     for result in results:
         context = result["Context"]
         model = result["Model"]
@@ -49,7 +51,9 @@ def format_results_for_display(results, config):
 
 def display_results(header, table_data):
     current_logger = logger.bind(function="display_results")
-    current_logger.debug(f"Displaying results with the following data: {header} and {table_data}")
+    current_logger.debug(
+        f"Displaying results with the following data: {header} and {table_data}"
+    )
     table = Table(title="Evaluation Results")
     for column in header:
         table.add_column(column)

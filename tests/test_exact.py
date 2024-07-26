@@ -3,7 +3,6 @@ from thabit.evaluators.exact import exact_match
 
 
 class TestExactMatch(unittest.TestCase):
-
     def test_exact_match(self):
         test_cases = [
             ("Hello world", "Hello world", True),
