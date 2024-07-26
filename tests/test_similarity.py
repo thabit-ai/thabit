@@ -1,5 +1,5 @@
 import unittest
-from thabit.evaluation.similarity import similarity
+from thabit.evaluators.similarity import similarity
 
 
 class TestSimilarity(unittest.TestCase):

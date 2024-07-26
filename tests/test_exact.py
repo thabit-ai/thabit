@@ -1,5 +1,5 @@
 import unittest
-from thabit.evaluation.exact import exact_match
+from thabit.evaluators.exact import exact_match
 
 
 class TestExactMatch(unittest.TestCase):

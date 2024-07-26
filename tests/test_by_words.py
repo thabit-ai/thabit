@@ -1,5 +1,5 @@
 import unittest
-from thabit.evaluation.by_words import has_all_words, has_some_words, has_no_words
+from thabit.evaluators.by_words import has_all_words, has_some_words, has_no_words
 
 
 class TestByWords(unittest.TestCase):
