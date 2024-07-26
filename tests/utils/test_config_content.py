@@ -37,7 +37,8 @@ class TestValidateConfig(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             validate_config(config)
         self.assertEqual(
-            str(context.exception), "'global_parameters' is missing required key: top_p"
+            str(context.exception),
+            "'global_parameters' is missing required key: top_p in the config file",
         )
 
     def test_missing_models_key(self):
@@ -71,5 +72,6 @@ class TestValidateConfig(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             validate_config(config)
         self.assertEqual(
-            str(context.exception), "Model is missing required key: model_short_name"
+            str(context.exception),
+            "Model is missing required key: model_short_name in the config file",
         )
