@@ -17,7 +17,7 @@ pytest tests
 ## Build
 
 ```shell
-pip3 install build
+pip3 install -e .
 ```
 
 ## Contribute
@@ -29,5 +29,16 @@ pip3 install build
 - Add logs.
 - Validate the input dataset.
 - Util folder for Validating Dataset, versioning datasets.
-- Visualise adding a dataset (using UI to populate).
+- UI for adding a dataset.
+- UI for adding/editing config.
 - Visulaise Output (using UI).
+- Run eval per dataset (add folders for dataset and for evals).
+  This is to simplify visualising results later using the UI.
+
+  ```
+  root
+  ├── datasets
+  │ └── a
+  └── evals
+    └── a
+  ```
