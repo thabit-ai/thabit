@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import os
-
-# from flask_cors import CORS
+from thabit.utils.logger import get_logger
 
 app = Flask(__name__)
+logger = get_logger()
 
 # set the template folder to the root folder
 app.template_folder = os.path.join(os.path.dirname(__file__), "..", "templates")
+logger.info(f"Template folder: {app.template_folder}")
 
 
 @app.route("/config", methods=["GET"])
