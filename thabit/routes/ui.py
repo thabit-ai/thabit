@@ -6,6 +6,9 @@ import os
 
 app = Flask(__name__)
 
+# set the template folder to the root folder
+app.template_folder = os.path.join(os.path.dirname(__file__), "..", "templates")
+
 
 @app.route("/config", methods=["GET"])
 def config():
