@@ -1,0 +1,5 @@
+context, evaluation_method, expected_output
+Which number is larger: 9.11 or 9.9?, Exact, 9.9
+"The odd numbers in this group add up to an even number: 15, 32, 5, 13, 82, 7, 1. True of False?", Exact, False
+What is the total of 𝟯𝟰+𝟱𝟲?, Exact, 90
+"You're in a dark room with a candle, a wood stove, and a gas lamp. You only have one match, so what do you light first?", Similarity, "The match"
