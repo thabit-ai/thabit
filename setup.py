@@ -14,8 +14,11 @@ requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 setup(
     name="thabit",
-    version="0.1.4",
+    version="0.1.5",
     packages=find_packages(),
+    package_data={
+        "thabit": ["templates/*"],
+    },
     entry_points={
         "console_scripts": [
             "thabit=thabit.thabit:cli",
