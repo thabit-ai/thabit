@@ -14,7 +14,7 @@ requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 setup(
     name="thabit",
-    version="0.1",
+    version="0.1.1",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
@@ -22,13 +22,12 @@ setup(
         ],
     },
     install_requires=read_requirements(requirements_path),
-    description="Thabit: choose the right LLM for your data",
+    description="Thabit: evaluate multiple LLMs on your data",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     author="Oras Al-Kubaisi",
     author_email="code@oras.me",
-    url="https://github.com/thabit/thabit",
-    classifiers=[
-        "LLM",
-        "Evaluation",
-    ],
+    url="https://github.com/thabit-ai/thabit",
+    classifiers=["Topic :: Utilities"],
     python_requires=">=3.6",
 )
