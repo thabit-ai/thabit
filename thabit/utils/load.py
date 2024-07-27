@@ -60,7 +60,7 @@ def validate_config(config):
     required_model_keys = [
         "provider",
         "model",
-        "model_short_name",
+        "model_name",
         "endpoint",
         "api_key",
     ]

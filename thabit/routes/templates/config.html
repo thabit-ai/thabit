@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dataset Creator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css"
+        rel="stylesheet">
+    <style>
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <form id="form" method="post" action="/save">
+            <div class="form-group">
+                <label for="global_prompt">Global Prompt:</label>
+                <textarea id="global_prompt" name="global_prompt" rows="4" class="form-control"></textarea>
+            </div>
+
+            <table id="table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Prompt</th>
+                        <th>Context</th>
+                        <th>Evaluator</th>
+                        <th>Expected Output</th>
+                        <th>Extras</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><textarea name="prompt" rows="2" class="form-control"></textarea></td>
+                        <td><textarea name="context" rows="2" class="form-control"></textarea></td>
+                        <td>
+                            <select name="evaluator" class="form-control">
+                                <option value="Exact">Exact</option>
+                                <option value="Similarity">Similarity</option>
+                                <option value="Has All Words">Has All Words</option>
+                                <option value="Has Some Words">Has Some Words</option>
+                                <option value="Do not have words">Do not have words</option>
+                            </select>
+                        </td>
+                        <td><textarea name="expected_output" rows="2" class="form-control"></textarea></td>
+                        <td><input type="number" name="threshold" style="display: none;" class="form-control"></td>
+                        <td><button type="button" class="btn btn-success" onclick="addRow()">+</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+    <script>
+        function addRow() {
+            const table = document.getElementById('table').getElementsByTagName('tbody')[0];
+            const newRow = table.rows[0].cloneNode(true);
+            newRow.cells[0].firstChild.value = '';
+            newRow.cells[1].firstChild.value = '';
+            newRow.cells[2].firstChild.value = 'Exact';
+            newRow.cells[3].firstChild.value = '';
+            newRow.cells[4].firstChild.style.display = 'none';
+            newRow.cells[4].firstChild.value = '';
+
+            // Add both + and - buttons to the new row
+            const addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'btn btn-success mr-2';
+            addButton.textContent = '+';
+            addButton.onclick = function () { addRow(); };
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'btn btn-danger';
+            removeButton.textContent = '-';
+            removeButton.onclick = function () { removeRow(removeButton); };
+
+            newRow.cells[5].innerHTML = '';
+            newRow.cells[5].appendChild(addButton);
+            newRow.cells[5].appendChild(removeButton);
+
+            table.appendChild(newRow);
+        }
+
+        function removeRow(button) {
+            const row = button.parentNode.parentNode;
+            const table = document.getElementById('table').getElementsByTagName('tbody')[0];
+            table.deleteRow(row.rowIndex);
+        }
+
+        function updateThresholdVisibility() {
+            const rows = document.querySelectorAll('select[name="evaluator"]');
+            rows.forEach(row => {
+                const threshold = row.parentNode.nextElementSibling.nextElementSibling.firstChild;
+                if (row.value === 'Similarity') {
+                    threshold.style.display = '';
+                } else {
+                    threshold.style.display = 'none';
+                }
+            });
+        }
+
+        function updateTagsInput() {
+            const rows = document.querySelectorAll('select[name="evaluator"]');
+            rows.forEach(row => {
+                const expectedOutput = row.parentNode.nextElementSibling.firstChild;
+                if (['Has All Words', 'Has Some Words', 'Do not have words'].includes(row.value)) {
+                    $(expectedOutput).tagsInput({
+                        'width': '100%',
+                        'height': 'auto',
+                        'interactive': true,
+                        'defaultText': 'Add words',
+                        'removeWithBackspace': true,
+                        'delimiter': ','
+                    });
+                } else {
+                    $(expectedOutput).tagsInput('destroy');
+                }
+
+                // Ensure textarea is shown for 'Similarity' or 'Exact'
+                if (['Similarity', 'Exact'].includes(row.value)) {
+                    expectedOutput.style.display = '';
+                } else {
+                    expectedOutput.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('change', function (event) {
+            if (event.target.name === 'evaluator') {
+                updateThresholdVisibility();
+                updateTagsInput();
+            }
+        });
+
+        updateThresholdVisibility();
+        updateTagsInput();
+    </script>
+</body>
+
+</html>

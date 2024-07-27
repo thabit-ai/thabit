@@ -28,7 +28,7 @@ def format_results_for_display(results, config):
         context_output[context][model] = (passed, result["Output"])
 
     header = ["Context", "Expected Output", "Evaluation Method"] + [
-        model["model_short_name"] for model in config["models"]
+        model["model_name"] for model in config["models"]
     ]
     current_logger.debug(f"Header for the table: {header}")
     table_data = [header]

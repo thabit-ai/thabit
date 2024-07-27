@@ -31,11 +31,11 @@ async def evaluate_models(config_data, data):
         model_params = config_data["global_parameters"].copy()
         model_params.update(model)
         openai_params = initialize_openai(model_params)
-        model_short_name = model["model_short_name"]
+        model_name = model["model_name"]
 
         for index, row in data.iterrows():
             task = asyncio.ensure_future(
-                call_ai_model(model, model_short_name, row["context"], openai_params)
+                call_ai_model(model, model_name, row["context"], openai_params)
             )
             tasks.append((model, row, task))
 
@@ -46,7 +46,7 @@ async def evaluate_models(config_data, data):
         try:
             passed = evaluate_output(output, row[2], row[1])
             result = {
-                "Model": model["model_short_name"],
+                "Model": model["model_name"],
                 "Context": row[0],
                 "Output": output,
                 "Expected Output": row[2],

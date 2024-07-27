@@ -22,6 +22,9 @@ from thabit.services.evaluate import run_evaluation
 from thabit.utils.cli import display_results, display_best_model
 from thabit.utils.llm import determine_best_model
 from thabit.utils.load import load_config
+from flask import Flask, request, jsonify
+from thabit.routes.ui import app
+import webbrowser
 
 # Initialize colorama
 init()
@@ -52,6 +55,18 @@ def eval(config, data):
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         exit(1)
+
+
+@cli.command()
+@click.option(
+    "--config_path", default="config.json", help="Path to the configuration JSON file."
+)
+def config(config_path):
+    """Open the /config route in a web browser."""
+    url = f"http://127.0.0.1:3300/config?config_path={config_path}"
+    webbrowser.open(url)
+    console.print(f"[green]Opened config route in web browser: {url}[/green]")
+    app.run(debug=True, port=3300)
 
 
 if __name__ == "__main__":

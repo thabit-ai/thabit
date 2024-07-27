@@ -13,12 +13,12 @@ def initialize_openai(model_config):
     del params["model"]
     del params["endpoint"]
     del params["api_key"]
-    del params["model_short_name"]
+    del params["model_name"]
     return params
 
 
 # Asynchronous function to call the AI model
-async def call_ai_model(model, model_short_name, context, openai_params):
+async def call_ai_model(model, model_name, context, openai_params):
     prompt = "You are a helpful AI assistant. I will ask you a question and I want you to return the direct answer without explaining. If the question is about a number, yes/no, or a simple true/false, return required value with no explanation."
     url = model["endpoint"]
     headers = {

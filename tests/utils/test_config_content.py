@@ -10,7 +10,7 @@ class TestValidateConfig(unittest.TestCase):
                 {
                     "provider": "openai",
                     "model": "gpt-3.5-turbo",
-                    "model_short_name": "gpt35",
+                    "model_name": "gpt35",
                     "endpoint": "https://api.openai.com/v1/chat/completions",
                     "api_key": "your_api_key",
                 }
@@ -73,5 +73,5 @@ class TestValidateConfig(unittest.TestCase):
             validate_config(config)
         self.assertEqual(
             str(context.exception),
-            "Model is missing required key: model_short_name in the config file",
+            "Model is missing required key: model_name in the config file",
         )
