@@ -19,7 +19,7 @@ from thabit.evaluators.eval import evaluate_output
 from thabit.utils.llm import initialize_openai, call_ai_model
 from thabit.utils.load import load_config, validate_config
 from thabit.services.evaluate import run_evaluation
-from thabit.utils.cli import display_results, display_best_model
+from thabit.utils.cli import display_results, display_best_model, display_accuracy_chart
 from thabit.utils.llm import determine_best_model
 from thabit.utils.load import load_config
 from flask import Flask, request, jsonify

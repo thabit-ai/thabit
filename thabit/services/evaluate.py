@@ -8,6 +8,7 @@ from thabit.utils.cli import (
     format_results_for_display,
     display_results,
     display_best_model,
+    display_accuracy_chart,
 )
 from thabit.utils.llm import determine_best_model
 from tqdm import tqdm
@@ -75,8 +76,7 @@ async def run_evaluation(config, data_file):
     results, config = await evaluate_models(config, data_file)
     header, table_data = format_results_for_display(results, config)
     display_results(header, table_data)
-    best_model, best_accuracy = determine_best_model(results)
-    display_best_model(best_model, best_accuracy)
+    display_accuracy_chart(header, table_data)
 
     # Save results to a JSON file with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")

@@ -62,6 +62,65 @@ def display_results(header, table_data):
     console.print(table)
 
 
+def display_accuracy_chart(header, table_data):
+    # read table data and create the accuracy percentage for
+    # each model, in a dict called model_accuracies
+    model_accuracies = {}
+    for row in table_data[1:]:
+        for i, model in enumerate(header[3:]):
+            if model not in model_accuracies:
+                model_accuracies[model] = {"correct": 0, "total": 0}
+            if row[i + 3] == f"[green]✔[/green]":
+                model_accuracies[model]["correct"] += 1
+            model_accuracies[model]["total"] += 1
+
+    # Calculate accuracy percentage for each model
+    for model, data in model_accuracies.items():
+        accuracy = (data["correct"] / data["total"]) * 100 if data["total"] > 0 else 0
+        model_accuracies[model] = accuracy
+
+    max_bar_length = 40
+    bar_char = "█"
+
+    # Sort the data in descending order based on values
+    sorted_data = sorted(
+        model_accuracies.items(), key=lambda item: item[1], reverse=True
+    )
+
+    # Create the bar chart as a list of Text objects
+    bar_chart = []
+    max_value = max(model_accuracies.values())
+    for i, (model, value) in enumerate(sorted_data):
+        bar_length = int(value / max_value * max_bar_length)
+        bar = bar_char * bar_length
+        if i == 0:
+            # Top one(s) in green
+            bar_style = "bold green"
+        else:
+            # Others in faded green
+            bar_style = "dim green"
+        # ensure that bar_text has the same length of the max model name
+        max_model_name_length = max([len(model) for model in model_accuracies.keys()])
+        bar_text = Text(
+            f"{model: <{max_model_name_length}} | {bar} {value}%", style=bar_style
+        )
+        bar_chart.append(bar_text)
+
+    # Combine the bar chart into a single Text object
+    bar_chart_text = Text("\n\n").join(bar_chart)
+
+    # Create a Panel to display the bar chart
+    panel = Panel(
+        bar_chart_text,
+        title="Model Evaluation Accuracy",
+        # border_style="blue",
+        padding=(2, 2),
+    )
+
+    # Render the panel to the console
+    console.print(panel)
+
+
 def display_best_model(best_model, best_accuracy):
     centered_text = Text(justify="center")
     centered_text.append(f"🏆 ")
