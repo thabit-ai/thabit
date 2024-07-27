@@ -12,7 +12,7 @@ class TestValidateConfig(unittest.TestCase):
                     "model": "gpt-3.5-turbo",
                     "model_name": "gpt35",
                     "endpoint": "https://api.openai.com/v1/chat/completions",
-                    "api_key": "your_api_key",
+                    "api_key_env_var": "your_api_key",
                 }
             ],
         }

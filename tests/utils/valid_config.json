@@ -5,28 +5,28 @@
         "model": "gpt-4o",
         "model_name": "GPT-4o",
         "endpoint": "https://api.openai.com/v1/chat/completions",
-        "api_key": "test"
+        "api_key_env_var": "TEST"
     },
     {
         "provider": "OpenAI",
         "model": "gpt-4o-mini",
         "model_name": "GPT-4o-mini",
         "endpoint": "https://api.openai.com/v1/chat/completions",
-        "api_key": "test"
+        "api_key_env_var": "TEST"
     },
     {
         "provider": "DeepSeek",
         "model": "deepseek-chat",
         "model_name": "DeepSeek-Chat",
         "endpoint": "https://api.deepseek.com/v1/chat/completions",
-        "api_key": "test"
+        "api_key_env_var": "TEST"
     },
     {
         "provider": "FireworksAI",
         "model": "accounts/fireworks/models/llama-v3p1-405b-instruct",
         "model_name": "Llama 3.1 3405b",
         "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
-        "api_key": "test"
+        "api_key_env_var": "TEST"
     }
 ],
     "global_parameters":{
