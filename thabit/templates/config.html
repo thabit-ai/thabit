@@ -40,11 +40,11 @@
                         <td><textarea name="context" rows="2" class="form-control"></textarea></td>
                         <td>
                             <select name="evaluator" class="form-control">
-                                <option value="Exact">Exact</option>
-                                <option value="Similarity">Similarity</option>
-                                <option value="Has All Words">Has All Words</option>
-                                <option value="Contains Words">Contains Words</option>
-                                <option value="Do not have words">Do not have words</option>
+                                <option value="exact">Exact</option>
+                                <option value="similarity">Similarity</option>
+                                <option value="contains_all_words">Contains All Words</option>
+                                <option value="contains_words">Contains Words</option>
+                                <option value="contains_no_words">Contains No Words</option>
                             </select>
                         </td>
                         <td><textarea name="expected_output" rows="2" class="form-control"></textarea></td>
@@ -112,7 +112,7 @@
             const rows = document.querySelectorAll('select[name="evaluator"]');
             rows.forEach(row => {
                 const expectedOutput = row.parentNode.nextElementSibling.firstChild;
-                if (['Has All Words', 'Has Some Words', 'Do not have words'].includes(row.value)) {
+                if (['contains_all_words', 'contains_words', 'contains_no_words'].includes(row.value)) {
                     $(expectedOutput).tagsInput({
                         'width': '100%',
                         'height': 'auto',

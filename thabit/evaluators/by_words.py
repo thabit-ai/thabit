@@ -1,4 +1,4 @@
-def has_all_words(output, words):
+def contains_all_words(output, words):
     """
     This function evaluates if the output contains all the words in the expected_output.
     """
@@ -12,7 +12,7 @@ def contains_words(output, words):
     return any(word in output for word in words.split())
 
 
-def has_no_words(output, words):
+def contains_no_words(output, words):
     """
     This function evaluates if the output contains none of the words in the expected_output.
     """
