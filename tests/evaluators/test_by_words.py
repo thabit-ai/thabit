@@ -1,5 +1,5 @@
 import unittest
-from thabit.evaluators.by_words import has_all_words, has_some_words, has_no_words
+from thabit.evaluators.by_words import has_all_words, contains_words, has_no_words
 
 
 class TestByWords(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestByWords(unittest.TestCase):
             with self.subTest(output=output, words=words):
                 self.assertEqual(has_all_words(output, words), expected_result)
 
-    def test_has_some_words(self):
+    def test_contains_words(self):
         test_cases = [
             ("Hello world", "Hello", True),
             ("Hello world", "world", True),
@@ -29,7 +29,7 @@ class TestByWords(unittest.TestCase):
 
         for output, words, expected_result in test_cases:
             with self.subTest(output=output, words=words):
-                self.assertEqual(has_some_words(output, words), expected_result)
+                self.assertEqual(contains_words(output, words), expected_result)
 
     def test_has_no_words(self):
         test_cases = [
