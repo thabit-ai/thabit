@@ -25,6 +25,8 @@ from thabit.utils.load import load_config
 from flask import Flask, request, jsonify
 from thabit.routes.ui import app
 import webbrowser
+import threading
+import time
 
 # Initialize colorama
 init()
@@ -64,9 +66,18 @@ def eval(config, data):
 def config(config_path):
     """Open the /config route in a web browser."""
     url = f"http://127.0.0.1:3300/config?config_path={config_path}"
-    webbrowser.open(url)
+
+    def run_app():
+        app.run(debug=False, port=3300, use_reloader=False)
+
+    # Run the Flask app in a separate thread
+    threading.Thread(target=run_app).start()
+
+    # Give the server a second to start up
+    time.sleep(1)
+
     console.print(f"[green]Opened config route in web browser: {url}[/green]")
-    app.run(debug=True, port=3300)
+    webbrowser.open(url)
 
 
 if __name__ == "__main__":
