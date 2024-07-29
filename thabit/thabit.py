@@ -28,6 +28,7 @@ import webbrowser
 import threading
 import time
 from thabit.utils.cli import show_main_menu
+from thabit.utils.config import has_models
 
 # Initialize colorama
 init()
@@ -58,7 +59,12 @@ def cli(ctx, show_menu):
     "--config", default="config.json", help="Path to the configuration JSON file."
 )
 @click.option("--dataset", required=True, help="Dataset name.")
-def eval(config, dataset):
+@click.option(
+    "--models",
+    required=False,
+    help="If you want to evaluate certain models, add the models name in comma separated format. Example: --models=gpt-3.5-turbo,gpt-4-o",
+)
+def eval(config, dataset, models):
     """Evaluate LLMs using your own dataset."""
     try:
         # load config data
@@ -66,7 +72,12 @@ def eval(config, dataset):
         # validate config data
         if validate_config(config):
             # run evaluation
-            asyncio.run(run_evaluation(config, dataset))
+            try:
+                has_models(models, config)
+                asyncio.run(run_evaluation(config, dataset, models))
+            except ValueError as e:
+                console.print(f"[red]Error: {str(e)}[/red]")
+                exit(1)
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         exit(1)

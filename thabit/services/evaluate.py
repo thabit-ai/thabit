@@ -24,9 +24,9 @@ console = Console()
 
 
 # Main asynchronous function to run the evaluation
-async def evaluate_models(config_data, dataset):
+async def evaluate_models(config_data, dataset, models):
+    models = [model.strip() for model in models.split(",")]
     # read dataset from dataset folder
-
     try:
         data = read_dataset(dataset)
         logger.info(f"Dataset: {data}")
@@ -39,6 +39,14 @@ async def evaluate_models(config_data, dataset):
 
     tasks = []
     for model in config_data["models"]:
+        logger.debug(f"Models in running: {models}")
+        logger.debug(f"Model in config: {model['model']}")
+        if model["model"] not in models:
+            # delete config data of model where model['model'] is not in models
+            config_data["models"] = [
+                m for m in config_data["models"] if m["model"] in models
+            ]
+            continue
         model_params = config_data["global_parameters"].copy()
         model_params.update(model)
         openai_params = initialize_openai(model_params)
@@ -101,8 +109,8 @@ async def evaluate_models(config_data, dataset):
     return results, config_data
 
 
-async def run_evaluation(config, dataset):
-    results, config = await evaluate_models(config, dataset)
+async def run_evaluation(config, dataset, models):
+    results, config = await evaluate_models(config, dataset, models)
     header, table_data = format_results_for_display(results, config)
     display_results(header, table_data)
     display_accuracy_chart(header, table_data)
