@@ -57,8 +57,8 @@ def cli(ctx, show_menu):
 @click.option(
     "--config", default="config.json", help="Path to the configuration JSON file."
 )
-@click.option("--name", required=True, help="Dataset name.")
-def eval(config, name):
+@click.option("--dataset", required=True, help="Dataset name.")
+def eval(config, dataset):
     """Evaluate LLMs using your own dataset."""
     try:
         # load config data
@@ -66,7 +66,7 @@ def eval(config, name):
         # validate config data
         if validate_config(config):
             # run evaluation
-            asyncio.run(run_evaluation(config, name))
+            asyncio.run(run_evaluation(config, dataset))
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         exit(1)

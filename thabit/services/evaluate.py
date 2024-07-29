@@ -16,13 +16,23 @@ from datetime import datetime
 import os
 import json
 from rich.console import Console
+from thabit.services.dataset import read_dataset
+from thabit.utils.logger import get_logger
 
+logger = get_logger()
 console = Console()
 
 
 # Main asynchronous function to run the evaluation
-async def evaluate_models(config_data, data):
-    data = pd.read_csv(data)
+async def evaluate_models(config_data, dataset):
+    # read dataset from dataset folder
+
+    try:
+        data = read_dataset(dataset)
+        logger.info(f"Dataset: {data}")
+    except Exception as e:
+        logger.error(f"Error reading dataset: {e}")
+        return
     results = []
     total_input_tokens = 0
     total_output_tokens = 0
@@ -34,28 +44,47 @@ async def evaluate_models(config_data, data):
         openai_params = initialize_openai(model_params)
         model_name = model["model_name"]
 
-        for index, row in data.iterrows():
+        for record in data["records"]:
+            if record["prompt"] != "":
+                prompt = record["prompt"]
+            else:
+                prompt = data["global_prompt"]
+            context = record["context"]
             task = asyncio.ensure_future(
-                call_ai_model(model, model_name, row["context"], openai_params)
+                call_ai_model(
+                    model,
+                    model_name,
+                    prompt=prompt,
+                    context=context,
+                    openai_params=openai_params,
+                )
             )
-            tasks.append((model, row, task))
+            tasks.append((model, record, task))
 
     progress_bar = tqdm(total=len(tasks), desc="Processing", unit="task")
     responses = await asyncio.gather(*[task for _, _, task in tasks])
 
-    for (model, row, _), output in zip(tasks, responses):
+    logger.info(f"Responses: {responses}")
+    logger.info(f"Tasks: {tasks}")
+    logger.info("Zip tasks and responses")
+    logger.info(list(zip(tasks, responses)))
+    for (model, record, _), output in zip(tasks, responses):
         try:
-            passed = evaluate_output(output, row[2], row[1])
+            passed = evaluate_output(
+                output,
+                expected_output=record["expected_output"],
+                evaluation_method=record["evaluation_method"],
+            )
             result = {
                 "Model": model["model_name"],
-                "Context": row[0],
+                "Context": record["context"],
                 "Output": output,
-                "Expected Output": row[2],
-                "Evaluation Method": row[1],
+                "Expected Output": record["expected_output"],
+                "Evaluation Method": record["evaluation_method"],
                 "Passed": f"[green]✔[/green]" if passed else f"[red]✘[/red]",
             }
             results.append(result)
-            total_input_tokens += len(row["context"].split())
+            total_input_tokens += len(record["context"].split())
             total_output_tokens += len(output.split())
             progress_bar.update(1)
             progress_bar.set_postfix(
@@ -72,8 +101,8 @@ async def evaluate_models(config_data, data):
     return results, config_data
 
 
-async def run_evaluation(config, data_file):
-    results, config = await evaluate_models(config, data_file)
+async def run_evaluation(config, dataset):
+    results, config = await evaluate_models(config, dataset)
     header, table_data = format_results_for_display(results, config)
     display_results(header, table_data)
     display_accuracy_chart(header, table_data)

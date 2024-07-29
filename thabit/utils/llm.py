@@ -23,9 +23,8 @@ def initialize_openai(model_config):
 
 
 # Asynchronous function to call the AI model
-async def call_ai_model(model, model_name, context, openai_params):
+async def call_ai_model(model, model_name, prompt, context, openai_params):
     logger.info(f"Calling {model_name} model")
-    prompt = "You are a helpful AI assistant. I will ask you a question and I want you to return the direct answer without explaining. If the question is about a number, yes/no, or a simple true/false, return required value with no explanation."
     url = model["endpoint"]
     headers = {
         "Authorization": f"Bearer {model['api_key']}",
