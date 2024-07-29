@@ -2,16 +2,14 @@ import openai
 import aiohttp
 from thabit.utils.logger import get_logger
 
-logger = get_logger()
-
 
 # Initialize OpenAI API for each model
 def initialize_openai(model_config):
     """
     Initialize OpenAI API for each model
     """
-    current_logger = logger.bind(function="initialize_openai")
-    current_logger.info(f"Initializing OpenAI API for {model_config['model_name']}")
+    logger = get_logger(function_name="initialize_openai")
+    logger.info(f"Initializing OpenAI API for {model_config['model_name']}")
     openai.api_key = model_config["api_key"]
     params = model_config.copy()
     del params["provider"]
@@ -25,8 +23,8 @@ def initialize_openai(model_config):
 
 # Asynchronous function to call the AI model
 async def call_ai_model(model, model_name, context, openai_params):
-    current_logger = logger.bind(function="call_ai_model")
-    current_logger.info(f"Calling {model_name} model")
+    logger = get_logger(function_name="call_ai_model")
+    logger.info(f"Calling {model_name} model")
     prompt = "You are a helpful AI assistant. I will ask you a question and I want you to return the direct answer without explaining. If the question is about a number, yes/no, or a simple true/false, return required value with no explanation."
     url = model["endpoint"]
     headers = {
@@ -41,13 +39,11 @@ async def call_ai_model(model, model_name, context, openai_params):
         ],
         **openai_params,
     }
-    current_logger.debug(
-        f"Sending request to {url} with headers {headers} and data {data}"
-    )
+    logger.debug(f"Sending request to {url} with headers {headers} and data {data}")
     async with aiohttp.ClientSession() as session:
         async with session.post(url, headers=headers, json=data) as response:
             result = await response.json()
-            current_logger.debug(f"Received response from {url}: {result}")
+            logger.debug(f"Received response from {url}: {result}")
             return result["choices"][0]["message"]["content"].strip()
 
 

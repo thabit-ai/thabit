@@ -7,15 +7,13 @@ from rich.text import Text
 from thabit.utils.logger import get_logger
 
 console = Console()
-logger = get_logger()
 
 
 def format_results_for_display(results, config):
+    logger = get_logger(function_name="format_results_for_display")
     context_output = {}
-    current_logger = logger.bind(function="format_results_for_display")
-    current_logger.debug(
-        f"Formatting results for display with the following data: {results}"
-    )
+
+    logger.debug(f"Formatting results for display with the following data: {results}")
     for result in results:
         context = result["Context"]
         model = result["Model"]
@@ -30,7 +28,7 @@ def format_results_for_display(results, config):
     header = ["Context", "Expected Output", "Evaluation Method"] + [
         model["model_name"] for model in config["models"]
     ]
-    current_logger.debug(f"Header for the table: {header}")
+    logger.debug(f"Header for the table: {header}")
     table_data = [header]
     for context, values in context_output.items():
         wrapped_context = textwrap.fill(context, width=50)
@@ -50,8 +48,8 @@ def format_results_for_display(results, config):
 
 
 def display_results(header, table_data):
-    current_logger = logger.bind(function="display_results")
-    current_logger.debug(
+    logger = get_logger(function_name="display_results")
+    logger.debug(
         f"Displaying results with the following data: {header} and {table_data}"
     )
     table = Table(title="Evaluation Results")
