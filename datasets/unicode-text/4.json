@@ -1,0 +1,103 @@
+{
+    "title": "Unicode Text",
+    "description": "This dataset is to evaluate which LLM can understand unicode strings.",
+    "global_prompt": "You're a helpful assistant. I will provide you with a unicode text and I want you to respond with the meaning of the text. Do not explain, just return the meaning.",
+    "records": [
+        {
+            "prompt": "",
+            "context": "\u0452\u0454\u026d\u026d\u0e4f \u0e2c\u0e4f\u0433\u026d\u0e54",
+            "evaluation_method": "contains_words",
+            "expected_output": "hello,world"
+        },
+        {
+            "prompt": "",
+            "context": "H\u04bd\u0285\u0285\u03c3 W\u03c3\u027e\u0285\u0503",
+            "evaluation_method": "contains_words",
+            "expected_output": "hello,world"
+        },
+        {
+            "prompt": "",
+            "context": "\u0267\u025b\u0196\u0196\u01a1 \u1ff3\u01a1\u0f5e\u0196\u0256",
+            "evaluation_method": "contains_words",
+            "expected_output": "hello,world"
+        },
+        {
+            "prompt": "",
+            "context": "\u01f6\u04bd\u04c0\u04c0\u0585 \u0c1a\u0585\u027e\u04c0\u056a",
+            "evaluation_method": "contains_words",
+            "expected_output": "hello,world"
+        },
+        {
+            "prompt": "",
+            "context": "\u13c2\u13cb\u13dd\u13dd\u13a7 \u13c7\u13a7\u13d2\u13dd\u13b4",
+            "evaluation_method": "contains_words",
+            "expected_output": "hello,world"
+        },
+        {
+            "prompt": "",
+            "context": "\u24ba\u24e5\u24d0\u24db\u24e4\u24d0\u24e3\u24d8\u24dd\u24d6 \u24c1\u24c1\u24c2\u24e2",
+            "evaluation_method": "contains_words",
+            "expected_output": "evaluating,llms"
+        },
+        {
+            "prompt": "",
+            "context": "[\u0305\u0332E][\u0305\u0332v][\u0305\u0332a][\u0305\u0332l][\u0305\u0332u][\u0305\u0332a][\u0305\u0332t][\u0305\u0332i][\u0305\u0332n][\u0305\u0332g] [\u0305\u0332L][\u0305\u0332L][\u0305\u0332M][\u0305\u0332s]",
+            "evaluation_method": "contains_words",
+            "expected_output": "evaluating,llms"
+        },
+        {
+            "prompt": "",
+            "context": "\u01dd\u028c\u0250ln\u0250\u0287\u1d09u\u0183 ll\u026fs",
+            "evaluation_method": "contains_words",
+            "expected_output": "evaluating,llms"
+        },
+        {
+            "prompt": "",
+            "context": "\ud83c\udd74\ud83c\udd85\ud83c\udd70\ud83c\udd7b\ud83c\udd84\ud83c\udd70\ud83c\udd83\ud83c\udd78\ud83c\udd7d\ud83c\udd76 \ud83c\udd7b\ud83c\udd7b\ud83c\udd7c\ud83c\udd82",
+            "evaluation_method": "contains_words",
+            "expected_output": "evaluating,llms"
+        },
+        {
+            "prompt": "",
+            "context": "\ud835\udd5f\ud835\udd66\ud835\udd5e\ud835\udd53\ud835\udd56\ud835\udd63\ud835\udd64 \ud835\udd57\ud835\udd63\ud835\udd60\ud835\udd5e \ud835\udfd9 \ud835\udd65\ud835\udd60 \ud835\udfda\ud835\udfdb\ud835\udfdd",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,1,235,to"
+        },
+        {
+            "prompt": "",
+            "context": "\u20a6\u0244\u20a5\u0e3f\u0246\u2c64\u20b4 \u20a3\u2c64\u00d8\u20a5 1 \u20ae\u00d8 235",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,from,1,235,to"
+        },
+        {
+            "prompt": "",
+            "context": "\u51e0\u3129\u722a\u4e43\u4e47\u5c3a\u4e02 \u5343\u5c3a\u3116\u722a 1 \u3112\u3116 235",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,from,1,to,235"
+        },
+        {
+            "prompt": "",
+            "context": "\u30df\ud83d\udc96 \u03b7\u03c5\u043c\u0432\u0454\u044f\u0455 \u0192\u044f\u03c3\u043c 1 \u0442\u03c3 235 \ud83d\udc96\u5f61",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,from,1,235,to"
+        },
+        {
+            "prompt": "",
+            "context": "\u25e6\u2022\u25cf\u2764\u2661 \ua09a\ua00e\ua0b5\ua357\ua3c2\ua2ea\ua444 \ua11f\ua2ea\ua27b\ua0b5 1 \ua4c4\ua27b 235 \u2661\u2764\u25cf\u2022\u25e6",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,from,1,to,235"
+        },
+        {
+            "prompt": "",
+            "context": "\u2665\u01b8\u0335\u0321\u04dc\u0335\u0328\u0304\u01b7\u2665 \u24dd\u24e4\u24dc\u24d1\u24d4\u24e1\u24e2 \u24d5\u24e1\u24de\u24dc \u2460 \u24e3\u24de \u2461\u2462\u2464 \u2665\u01b8\u0335\u0321\u04dc\u0335\u0328\u0304\u01b7\u2665",
+            "evaluation_method": "contains_words",
+            "expected_output": "numbers,from,to,1,235"
+        },
+        {
+            "prompt": "",
+            "context": "\u0121\u0433\u0454\u0454\u0442\u03b9\u03b7\u0121\u0455 \u0454\u0430\u0433\u0442\u0265",
+            "evaluation_method": "contains_words",
+            "expected_output": "greetings,earth"
+        }
+    ]
+}

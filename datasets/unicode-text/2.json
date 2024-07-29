@@ -1,0 +1,22 @@
+{
+    "title": "Unicode Text",
+    "description": "This dataset is to evaluate which LLM can understand unicode strings.",
+    "global_prompt": "",
+    "records": [
+        {
+            "context": "\u0452\u0454\u026d\u026d\u0e4f \u0e2c\u0e4f\u0433\u026d\u0e54",
+            "evaluationMethod": "contains_words",
+            "expectedOutput": "hello,world"
+        },
+        {
+            "context": "H\u04bd\u0285\u0285\u03c3 W\u03c3\u027e\u0285\u0503",
+            "evaluationMethod": "contains_words",
+            "expectedOutput": "hello,world"
+        },
+        {
+            "context": "\u0267\u025b\u0196\u0196\u01a1 \u1ff3\u01a1\u0f5e\u0196\u0256",
+            "evaluationMethod": "contains_words",
+            "expectedOutput": "hello,world"
+        }
+    ]
+}
