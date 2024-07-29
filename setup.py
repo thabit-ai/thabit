@@ -14,7 +14,7 @@ requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 setup(
     name="thabit",
-    version="0.2.0",
+    version="0.2.1",
     packages=find_packages(),
     package_data={
         "thabit": ["templates/*"],

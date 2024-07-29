@@ -105,7 +105,7 @@ def save_dataset():
         dataset = {
             "title": request_data.get("title", ""),
             "description": request_data.get("description", ""),
-            "global_prompt": request_data.get("globalPrompt", ""),
+            "global_prompt": request_data.get("global_prompt", ""),
             "records": request_data.get("records", []),
         }
 

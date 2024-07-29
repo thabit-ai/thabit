@@ -90,7 +90,7 @@ def display_accuracy_chart(header, table_data):
     for i, (model, value) in enumerate(sorted_data):
         bar_length = int(value / max_value * max_bar_length)
         bar = bar_char * bar_length
-        if i == 0:
+        if i == 0 or value == max_value:
             # Top one(s) in green
             bar_style = "bold green"
         else:

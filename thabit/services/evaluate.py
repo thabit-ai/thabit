@@ -111,10 +111,11 @@ async def run_evaluation(config, dataset):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
     output_file = f"eval-{timestamp}.json"
     os.makedirs("evals", exist_ok=True)
-    with open(os.path.join("evals", output_file), "w") as file:
+    os.makedirs(f"evals/{dataset}", exist_ok=True)
+    with open(os.path.join(f"evals/{dataset}/", output_file), "w") as file:
         json.dump(
             {"global_parameters": config["global_parameters"], "results": results},
             file,
             indent=4,
         )
-    console.print(f"Evaluation results saved to evals/{output_file}")
+    console.print(f"Evaluation results saved to evals/{dataset}/{output_file}")
