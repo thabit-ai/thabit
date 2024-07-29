@@ -27,6 +27,7 @@ from thabit.routes.ui import app
 import webbrowser
 import threading
 import time
+from thabit.utils.cli import show_main_menu
 
 # Initialize colorama
 init()
@@ -36,17 +37,29 @@ console = Console()
 
 
 # CLI interface using Click
-@click.group()
-def cli():
-    pass
+@click.group(invoke_without_command=True)
+@click.option("--show-menu", is_flag=True, help="Show the main menu.")
+@click.pass_context
+def cli(ctx, show_menu):
+    if ctx.invoked_subcommand is None or show_menu:
+        show_main_menu()
+        # list all available commands and their descriptions and options
+        console.print("[bold][blue]Available commands:[/blue][/bold]")
+        for command in cli.commands:
+            console.print(f"[bold]{command}[/bold]")
+            console.print(f"    [italic]{cli.commands[command].__doc__}[/italic]")
+            # list all options for the command
+            for option in cli.commands[command].params:
+                console.print(f"        [green]--{option.name}[/green]")
 
 
 @cli.command()
 @click.option(
     "--config", default="config.json", help="Path to the configuration JSON file."
 )
-@click.option("--data", required=True, help="Path to the dataset folder.")
+@click.option("--dataset", required=True, help="Path to the dataset folder.")
 def eval(config, data):
+    """Evaluate LLMs using your own dataset."""
     try:
         # load config data
         config = load_config(config)
@@ -85,7 +98,7 @@ def config(config_path):
 @click.option("--dataset", required=True, help="Path to the dataset folder.")
 @click.option("--version", help="Version of the dataset.")
 def dataset(dataset, version):
-    """Open the /config route in a web browser."""
+    """Open the /dataset route in a web browser."""
     url = f"http://127.0.0.1:3300/dataset?dataset={dataset}&version={version}"
 
     def run_app():

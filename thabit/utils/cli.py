@@ -134,3 +134,21 @@ def display_best_model(best_model, best_accuracy):
     )
     centered_panel = Align.center(panel)
     console.print(centered_panel)
+
+
+def show_main_menu():
+    """show the main menu"""
+    thabit_ascii = """
+████████╗██╗  ██╗ █████╗ ██████╗ ██╗████████╗
+╚══██╔══╝██║  ██║██╔══██╗██╔══██╗██║╚══██╔══╝
+   ██║   ███████║███████║██████╔╝██║   ██║
+   ██║   ██╔══██║██╔══██║██╔══██╗██║   ██║
+   ██║   ██║  ██║██║  ██║██████╔╝██║   ██║
+   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝   ╚═╝
+    """
+    description = """
+    Thabit is a platform to evaluate multiple LLMs at once using your own dataset.
+    """
+
+    console.print("[deep_sky_blue1]" + thabit_ascii + "[/deep_sky_blue1]")
+    console.print("[bold][blue]" + description + "[/blue][/bold]")
