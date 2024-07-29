@@ -26,10 +26,7 @@ pip3 install -e .
 
 ## TODO:
 
-- More logs.
 - Validate the input dataset.
-- Util folder for Validating Dataset, versioning datasets.
-- UI for adding a dataset.
 - UI for adding/editing config.
 - Visulaise Output (using UI).
 - Run eval per dataset (add folders for dataset and for evals).
