@@ -10,7 +10,10 @@ def load_config(file_path):
     """
     Load configuration from JSON file.
     """
-    dotenv.load_dotenv()
+    # get the path of the command line pwd
+    path = os.path.join(os.getcwd(), ".env")
+    dotenv.load_dotenv(path)
+
     try:
         with open(file_path, "r") as file:
             data = json.load(file)
