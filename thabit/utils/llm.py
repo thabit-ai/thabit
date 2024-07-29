@@ -30,19 +30,42 @@ async def call_ai_model(model, model_name, prompt, context, openai_params):
         "Authorization": f"Bearer {model['api_key']}",
         "Content-Type": "application/json",
     }
-    data = {
-        "model": model["model"],
-        "messages": [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": context},
-        ],
-        **openai_params,
-    }
+    if model["provider"] == "Anthropic":
+        del headers["Authorization"]
+        if "frequency_penalty" in openai_params:
+            del openai_params["frequency_penalty"]
+        if "presence_penalty" in openai_params:
+            del openai_params["presence_penalty"]
+        if "top_p" in openai_params:
+            del openai_params["top_p"]
+        headers["x-api-key"] = model["api_key"]
+        headers["anthropic-version"] = "2023-06-01"
+
+        data = {
+            "model": model["model"],
+            "system": prompt,
+            "messages": [
+                {"role": "user", "content": context},
+            ],
+            **openai_params,
+        }
+    else:
+        data = {
+            "model": model["model"],
+            "messages": [
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": context},
+            ],
+            **openai_params,
+        }
+
     logger.debug(f"Sending request to {url} with headers {headers} and data {data}")
     async with aiohttp.ClientSession() as session:
         async with session.post(url, headers=headers, json=data) as response:
             result = await response.json()
             logger.debug(f"Received response from {url}: {result}")
+            if model["provider"] == "Anthropic":
+                return result["content"][0]["text"].strip()
             return result["choices"][0]["message"]["content"].strip()
 
 
