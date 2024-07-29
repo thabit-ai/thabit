@@ -9,12 +9,12 @@ from thabit.evaluators.by_words import (
 class TestByWords(unittest.TestCase):
     def test_contains_all_words(self):
         test_cases = [
-            ("Hello world", "Hello world", True),
+            ("Hello world", "Hello, world", True),
             ("Hello world", "Hello", True),
-            ("Hello world", "world Hello", True),
+            ("Hello world", "world, Hello, ", True),
             ("Hello world", "Hello there", False),
             ("Goodbye world", "Goodbye", True),
-            ("Goodbye world", "Goodbye everyone", False),
+            ("Goodbye world", "Goodbye, everyone", False),
         ]
 
         for output, words, expected_result in test_cases:
@@ -26,9 +26,9 @@ class TestByWords(unittest.TestCase):
             ("Hello world", "Hello", True),
             ("Hello world", "world", True),
             ("Hello world", "Goodbye", False),
-            ("Goodbye world", "Goodbye everyone", True),
-            ("Fuzzy matching", "Fuzzy match", True),
-            ("Fuzzy matching", "Fuzzy", True),
+            ("Goodbye world", "Goodbye, everyone", True),
+            ("Fuzzy matching", "Fuzzy, match", True),
+            ("Fuzzy matching", "Fuzzy, ", True),
         ]
 
         for output, words, expected_result in test_cases:
@@ -38,9 +38,9 @@ class TestByWords(unittest.TestCase):
     def test_contains_no_words(self):
         test_cases = [
             ("Hello world", "Goodbye", True),
-            ("Hello world", "Goodbye everyone", True),
+            ("Hello world", "Goodbye, everyone", True),
             ("Goodbye", "Hello", True),
-            ("Fuzzy matching", "Fuzzy match", False),
+            ("Fuzzy matching", "Fuzzy, match", False),
             ("", "Non-empty", False),
             ("Non-empty", "", False),
         ]
