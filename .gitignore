@@ -5,7 +5,6 @@ dist/
 lib/
 include/
 data.csv
-config.json
 pyvenv.cfg
 thabit.egg-info/
 __pycache__/

@@ -24,9 +24,30 @@
     {
         "provider": "FireworksAI",
         "model": "accounts/fireworks/models/llama-v3p1-405b-instruct",
-        "model_name": "Llama 3.1 3405b",
+        "model_name": "Llama 3.1 405b",
         "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
         "api_key_env_var": "FIREWORKS_API_KEY"
+    },
+    {
+        "provider": "Anthropic",
+        "model": "claude-3-5-sonnet-20240620",
+        "model_name": "Claude 3.5 Sonnet",
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "api_key_env_var": "CLAUDE_API_KEY"
+    },
+    {
+        "provider": "Cohere",
+        "model": "command-r",
+        "model_name": "Cohere Command R",
+        "endpoint": "https://api.cohere.com/v1/chat",
+        "api_key_env_var": "COHERE_API_KEY"
+    },
+    {
+        "provider": "Cohere",
+        "model": "command-r-plus",
+        "model_name": "Cohere Command R+",
+        "endpoint": "https://api.cohere.com/v1/chat",
+        "api_key_env_var": "COHERE_API_KEY"
     }
 ],
     "global_parameters":{
