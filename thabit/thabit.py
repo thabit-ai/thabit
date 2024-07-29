@@ -45,7 +45,7 @@ def cli():
 @click.option(
     "--config", default="config.json", help="Path to the configuration JSON file."
 )
-@click.option("--data", default="data.csv", help="Path to the data CSV file.")
+@click.option("--data", required=True, help="Path to the dataset folder.")
 def eval(config, data):
     try:
         # load config data
@@ -77,6 +77,27 @@ def config(config_path):
     time.sleep(1)
 
     console.print(f"[green]Opened config route in web browser: {url}[/green]")
+    webbrowser.open(url)
+
+
+# Create/Edit dataset
+@cli.command()
+@click.option("--dataset", required=True, help="Path to the dataset folder.")
+@click.option("--version", help="Version of the dataset.")
+def dataset(dataset, version):
+    """Open the /config route in a web browser."""
+    url = f"http://127.0.0.1:3300/dataset?dataset={dataset}&version={version}"
+
+    def run_app():
+        app.run(debug=False, port=3300, use_reloader=False)
+
+    # Run the Flask app in a separate thread
+    threading.Thread(target=run_app).start()
+
+    # Give the server a second to start up
+    time.sleep(1)
+
+    console.print(f"[green]Opened dataset route in web browser: {url}[/green]")
     webbrowser.open(url)
 
 
