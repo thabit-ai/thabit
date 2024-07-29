@@ -7,10 +7,10 @@ from rich.text import Text
 from thabit.utils.logger import get_logger
 
 console = Console()
+logger = get_logger()
 
 
 def format_results_for_display(results, config):
-    logger = get_logger(function_name="format_results_for_display")
     context_output = {}
 
     logger.debug(f"Formatting results for display with the following data: {results}")
@@ -48,7 +48,6 @@ def format_results_for_display(results, config):
 
 
 def display_results(header, table_data):
-    logger = get_logger(function_name="display_results")
     logger.debug(
         f"Displaying results with the following data: {header} and {table_data}"
     )

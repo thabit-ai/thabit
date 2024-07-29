@@ -4,13 +4,13 @@ import dotenv
 import os
 
 dotenv.load_dotenv()
+logger = get_logger()
 
 
 def load_config(file_path):
     """
     Load configuration from JSON file.
     """
-    logger = get_logger(function_name="load_config")
     try:
         with open(file_path, "r") as file:
             data = json.load(file)
@@ -42,7 +42,6 @@ def validate_config(config):
     """
     Validate the configuration file.
     """
-    logger = get_logger(function_name="validate_config")
     required_global_keys = ["temperature", "max_tokens", "top_p"]
     if "global_parameters" not in config:
         logger.error("Configuration is missing 'global_parameters' key.")

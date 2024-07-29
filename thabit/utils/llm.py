@@ -2,13 +2,14 @@ import openai
 import aiohttp
 from thabit.utils.logger import get_logger
 
+logger = get_logger()
+
 
 # Initialize OpenAI API for each model
 def initialize_openai(model_config):
     """
     Initialize OpenAI API for each model
     """
-    logger = get_logger(function_name="initialize_openai")
     logger.info(f"Initializing OpenAI API for {model_config['model_name']}")
     openai.api_key = model_config["api_key"]
     params = model_config.copy()
@@ -23,7 +24,6 @@ def initialize_openai(model_config):
 
 # Asynchronous function to call the AI model
 async def call_ai_model(model, model_name, context, openai_params):
-    logger = get_logger(function_name="call_ai_model")
     logger.info(f"Calling {model_name} model")
     prompt = "You are a helpful AI assistant. I will ask you a question and I want you to return the direct answer without explaining. If the question is about a number, yes/no, or a simple true/false, return required value with no explanation."
     url = model["endpoint"]

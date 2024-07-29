@@ -1,7 +1,7 @@
 from loguru import logger
 
 
-def get_logger(function_name=""):
+def get_logger():
     logger.remove()  # Remove the default logger to avoid logging to the terminal
     logger.add(
         "./logs/logfile.log",
@@ -9,7 +9,7 @@ def get_logger(function_name=""):
         retention="10 days",
         compression="zip",
         level="DEBUG",
-        format="{time} {level} [{extra[function]}] {message}",
+        format="{time} <{level}> {message}",
         enqueue=True,
         catch=True,
     )
@@ -19,10 +19,9 @@ def get_logger(function_name=""):
         retention="10 days",
         compression="zip",
         level="ERROR",
-        format="{time} {level} [{extra[function]}] {message}",
+        format="{time} <{level}> {message}",
         enqueue=True,
         catch=True,
     )
 
-    logger.bind(function=function_name)
     return logger

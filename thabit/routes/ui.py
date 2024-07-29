@@ -6,11 +6,11 @@ from thabit.constants.platform import DATASET_FOLDER
 from glob import glob
 
 app = Flask(__name__)
-# logger = get_logger(function_name="ui.py")
+logger = get_logger()
 
 # set the template folder to the root folder
 app.template_folder = os.path.join(os.path.dirname(__file__), "..", "templates")
-# logger.info(f"Template folder: {app.template_folder}")
+logger.info(f"Template folder: {app.template_folder}")
 
 
 @app.route("/config", methods=["GET"])
@@ -29,6 +29,8 @@ def config():
 @app.route("/dataset", methods=["GET"])
 def dataset():
     dataset_path = request.args.get("dataset")
+    if not dataset_path:
+        return jsonify({"status": "error", "message": "Dataset is required"}, 400)
     version = request.args.get("version")
     full_dataset_path = os.path.join(DATASET_FOLDER, dataset_path)
     if not version:
@@ -60,7 +62,7 @@ def dataset():
                 dataset = json.load(f)
         else:
             dataset = {}
-    return render_template("dataset.html", dataset=dataset)
+    return render_template("dataset.html", dataset=dataset, dataset_path=dataset_path)
 
 
 @app.route("/save_config", methods=["POST"])
@@ -71,16 +73,21 @@ def save_config(config_path):
     # save the config file
     with open(config_path, "w") as f:
         json.dump(request.json, f)
-    return jsonify({"status": "success"})
+    return jsonify({"status": "success"}), 200
 
 
-@app.route("/save_dataset", methods=["POST"])
-def save_dataset(dataset_path):
-    logger = get_logger(function_name="save_dataset")
+@app.route("/dataset/save", methods=["POST"])
+def save_dataset():
+    dataset_path = request.args.get("dataset")
     full_dataset_path = os.path.join(DATASET_FOLDER, dataset_path)
     # the files in the folder are named as 1.json, 2.json, 3.json etc. referring to the version.
     # check the latest version and add a new one
-    try:
+    if not os.path.exists(full_dataset_path):
+        os.makedirs(full_dataset_path)
+    # check if the full_dataset_path has .json files
+    if not glob(full_dataset_path + "/*.json"):
+        latest_version = 0
+    else:
         latest_version = max(
             [
                 int(f.split(".")[0])
@@ -90,15 +97,21 @@ def save_dataset(dataset_path):
         )
         if latest_version == "":
             latest_version = 0
-        new_version = latest_version + 1
-    except Exception as e:
-        logger.error(f"Error getting latest version: {e}")
-        return jsonify({"status": "error", "message": "Error getting latest version"})
+    new_version = latest_version + 1
     # save the dataset file
     try:
+        request_data = request.get_json()
+        logger.info(f"Request data: {request_data}")
+        dataset = {
+            "title": request_data.get("title", ""),
+            "description": request_data.get("description", ""),
+            "global_prompt": request_data.get("globalPrompt", ""),
+            "records": request_data.get("records", []),
+        }
+
         with open(full_dataset_path + f"/{new_version}.json", "w") as f:
-            json.dump(request.json, f, indent=4)
+            json.dump(dataset, f, indent=4)
     except Exception as e:
         logger.error(f"Error saving dataset: {e}")
-        return jsonify({"status": "error", "message": "Error saving dataset"})
-    return jsonify({"status": "success"})
+        return jsonify({"status": "error", "message": "Error saving dataset"}), 500
+    return jsonify({"status": "success"}), 200
