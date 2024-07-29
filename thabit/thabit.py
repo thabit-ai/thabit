@@ -40,8 +40,12 @@ console = Console()
 # CLI interface using Click
 @click.group(invoke_without_command=True)
 @click.option("--show-menu", is_flag=True, help="Show the main menu.")
+@click.option("--version", is_flag=True, help="Show the version of Thabit.")
 @click.pass_context
-def cli(ctx, show_menu):
+def cli(ctx, show_menu, version):
+    if version:
+        console.print(f"[bold]Thabit v0.2.2[/bold]")
+        exit(0)
     if ctx.invoked_subcommand is None or show_menu:
         show_main_menu()
         # list all available commands and their descriptions and options
