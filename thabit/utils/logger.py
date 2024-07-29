@@ -1,7 +1,7 @@
 from loguru import logger
 
 
-def get_logger():
+def get_logger(function_name=""):
     logger.remove()  # Remove the default logger to avoid logging to the terminal
     logger.add(
         "./logs/logfile.log",
@@ -23,4 +23,6 @@ def get_logger():
         enqueue=True,
         catch=True,
     )
+
+    logger.bind(function=function_name)
     return logger
