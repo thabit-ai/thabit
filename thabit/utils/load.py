@@ -3,7 +3,6 @@ from thabit.utils.logger import get_logger
 import dotenv
 import os
 
-dotenv.load_dotenv()
 logger = get_logger()
 
 
@@ -11,6 +10,7 @@ def load_config(file_path):
     """
     Load configuration from JSON file.
     """
+    dotenv.load_dotenv()
     try:
         with open(file_path, "r") as file:
             data = json.load(file)

@@ -98,6 +98,8 @@ def display_accuracy_chart(header, table_data):
             bar_style = "light_salmon3"
         # ensure that bar_text has the same length of the max model name
         max_model_name_length = max([len(model) for model in model_accuracies.keys()])
+        # value is a float, so we need to format it to 2 decimal places
+        value = f"{value:.2f}"
         bar_text = Text(
             f"{model: <{max_model_name_length}} | {bar} {value}%", style=bar_style
         )
