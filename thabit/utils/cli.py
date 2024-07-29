@@ -95,7 +95,7 @@ def display_accuracy_chart(header, table_data):
             bar_style = "bold green"
         else:
             # Others in faded green
-            bar_style = "dim green"
+            bar_style = "light_salmon3"
         # ensure that bar_text has the same length of the max model name
         max_model_name_length = max([len(model) for model in model_accuracies.keys()])
         bar_text = Text(

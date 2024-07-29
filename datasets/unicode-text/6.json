@@ -1,7 +1,7 @@
 {
     "title": "Unicode Text",
     "description": "This dataset is to evaluate which LLM can understand unicode strings.",
-    "global_prompt": "You're a helpful assistant. I will provide you with a unicode text and I want you to respond with the meaning of the text. Do not explain, just return the meaning.",
+    "global_prompt": "You're a helpful assistant. I will provide you with a unicode text and I want you to respond with the meaning of the text. All these strings are in English. Do not explain, just return the meaning.",
     "records": [
         {
             "prompt": "",
