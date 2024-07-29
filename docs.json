@@ -1,0 +1,7 @@
+{
+    "name": "Thabit",
+    "description": "Evaluate multiple LLM models with custom datasets.",
+    "logo": "/assets/img/logo.png",
+    "logoDark": "/assets/img/logo.png",
+    "plausibleAnalytics": true
+  }

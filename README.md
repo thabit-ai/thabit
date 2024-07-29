@@ -1,6 +1,24 @@
+<div align="center">
+  <img src="./docs/assets/img/thabit-logo.png" width="90%" alt=Thabit" />
+</div>
+
+<div align="center" style="line-height: 1;">
+  <a href="https://thabit.ai" target="_blank" style="margin: 2px;">
+    Home Page
+  </a>
+  &nbsp; | &nbsp;
+  <a href="https://docs.thabit.ai" target="_blank" style="margin: 2px;">
+    Docs
+  </a>
+  &nbsp; | &nbsp;
+  <a href="https://discord.gg/5XQgnjXQ" target="_blank" style="margin: 2px;">
+    Discord
+  </a>
+</div>
+
 # Thabit
 
-Evaluate multiple LLM models with the same data to determine which one is better for your use case.
+Evaluate multiple LLM models with custom datasets.
 
 ## How to run
 
