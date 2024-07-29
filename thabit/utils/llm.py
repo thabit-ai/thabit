@@ -49,6 +49,14 @@ async def call_ai_model(model, model_name, prompt, context, openai_params):
             ],
             **openai_params,
         }
+    elif model["provider"] == "Cohere":
+        data = {
+            "model": model["model"],
+            "message": prompt + context,
+            "prompt_truncation": "AUTO",
+            "connectors": [],
+            "stream": False,
+        }
     else:
         data = {
             "model": model["model"],
@@ -66,6 +74,8 @@ async def call_ai_model(model, model_name, prompt, context, openai_params):
             logger.debug(f"Received response from {url}: {result}")
             if model["provider"] == "Anthropic":
                 return result["content"][0]["text"].strip()
+            if model["provider"] == "Cohere":
+                return result["text"].strip()
             return result["choices"][0]["message"]["content"].strip()
 
 
