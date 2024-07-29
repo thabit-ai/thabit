@@ -97,7 +97,7 @@
                 </div>
                 <textarea
                     class="flex-grow ml-2 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="globalPrompt" rows="3" required>{{ dataset.global_prompt }}</textarea>
+                    id="global_prompt" rows="3" required>{{ dataset.global_prompt }}</textarea>
             </div>
 
             <div id="recordsContainer">
@@ -147,22 +147,22 @@
                                 <textarea class="w-full mt-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline context" id="context${recordCount}" rows="2" required>${data.context ?? ''}</textarea>
                             </div>
                             <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="evaluationMethod${recordCount}">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="evaluation_method${recordCount}">
                                     Evaluation Method
                                 </label>
-                                <select class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline evaluation-method" id="evaluationMethod${recordCount}" required>
-                                    <option value="exact" ${data.evaluationMethod === 'exact' ? 'selected' : ''}>Exact</option>
-                                    <option value="similarity" ${data.evaluationMethod === 'similarity' ? 'selected' : ''}>Similarity</option>
-                                    <option value="contains_words" ${data.evaluationMethod === 'contains_words' ? 'selected' : ''}>Contains Words</option>
-                                    <option value="contains_all_words" ${data.evaluationMethod === 'contains_all_words' ? 'selected' : ''}>Contains All Words</option>
-                                    <option value="contains_no_words" ${data.evaluationMethod === 'contains_no_words' ? 'selected' : ''}>Contains No Words</option>
+                                <select class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline evaluation-method" id="evaluation_method${recordCount}" required>
+                                    <option value="exact" ${data.evaluation_method === 'exact' ? 'selected' : ''}>Exact</option>
+                                    <option value="similarity" ${data.evaluation_method === 'similarity' ? 'selected' : ''}>Similarity</option>
+                                    <option value="contains_words" ${data.evaluation_method === 'contains_words' ? 'selected' : ''}>Contains Words</option>
+                                    <option value="contains_all_words" ${data.evaluation_method === 'contains_all_words' ? 'selected' : ''}>Contains All Words</option>
+                                    <option value="contains_no_words" ${data.evaluation_method === 'contains_no_words' ? 'selected' : ''}>Contains No Words</option>
                                 </select>
                             </div>
                             <div class="expected-output-container">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="expectedOutput${recordCount}">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="expected_output${recordCount}">
                                     Expected Output
                                 </label>
-                                <textarea class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="expectedOutput${recordCount}" rows="2" required>${data.expectedOutput ?? ''}</textarea>
+                                <textarea class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="expected_output${recordCount}" rows="2" required>${data.expected_output ?? ''}</textarea>
                             </div>
                             <div class="extras hidden">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="threshold${recordCount}">
@@ -204,24 +204,24 @@
 
             $(document).on('change', '.evaluation-method', function () {
                 const container = $(this).closest('.record');
-                const expectedOutputContainer = container.find('.expected-output-container');
+                const expected_outputContainer = container.find('.expected-output-container');
                 const extrasContainer = container.find('.extras');
-                const expectedOutput = container.find('.expected-output');
+                const expected_output = container.find('.expected-output');
 
                 if ($(this).val() === 'exact' || $(this).val() === 'similarity') {
-                    expectedOutput.tagsInput('destroy');
-                    expectedOutputContainer.html(`
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="${expectedOutput.attr('id')}">
+                    expected_output.tagsInput('destroy');
+                    expected_outputContainer.html(`
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="${expected_output.attr('id')}">
                             Expected Output
                         </label>
-                        <textarea class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="${expectedOutput.attr('id')}" rows="2" required></textarea>
+                        <textarea class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="${expected_output.attr('id')}" rows="2" required></textarea>
                     `);
                 } else {
-                    expectedOutputContainer.html(`
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="${expectedOutput.attr('id')}">
+                    expected_outputContainer.html(`
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="${expected_output.attr('id')}">
                             Expected Output
                         </label>
-                        <input type="text" class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="${expectedOutput.attr('id')}" required>
+                        <input type="text" class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline expected-output" id="${expected_output.attr('id')}" required>
                     `);
                     initializeTagsInput();
                 }
@@ -252,10 +252,10 @@
                 $('.record').each(function () {
                     let prompt = $(this).find('.prompt').val();
                     let context = $(this).find('.context').val();
-                    let evaluationMethod = $(this).find('.evaluation-method').val();
-                    let expectedOutput = $(this).find('.expected-output').val();
+                    let evaluation_method = $(this).find('.evaluation-method').val();
+                    let expected_output = $(this).find('.expected-output').val();
                     let threshold = $(this).find('.threshold').val();
-                    records.push({ prompt, context, evaluationMethod, expectedOutput, threshold });
+                    records.push({ prompt, context, evaluation_method, expected_output, threshold });
                 });
                 let data = { title, description, prompt, records };
                 // ajax request to `/dataset/save` with data
