@@ -25,7 +25,6 @@ console = Console()
 
 # Main asynchronous function to run the evaluation
 async def evaluate_models(config_data, dataset, models):
-    models = [model.strip() for model in models.split(",")]
     # read dataset from dataset folder
     try:
         data = read_dataset(dataset)
@@ -41,7 +40,7 @@ async def evaluate_models(config_data, dataset, models):
     for model in config_data["models"]:
         logger.debug(f"Models in running: {models}")
         logger.debug(f"Model in config: {model['model']}")
-        if model["model"] not in models:
+        if models and model["model"] not in models:
             # delete config data of model where model['model'] is not in models
             config_data["models"] = [
                 m for m in config_data["models"] if m["model"] in models

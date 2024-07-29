@@ -29,6 +29,7 @@ import threading
 import time
 from thabit.utils.cli import show_main_menu
 from thabit.utils.config import has_models
+from thabit.constants.platform import CURRENT_VERSION
 
 # Initialize colorama
 init()
@@ -44,7 +45,7 @@ console = Console()
 @click.pass_context
 def cli(ctx, show_menu, version):
     if version:
-        console.print(f"[bold]Thabit v0.2.2[/bold]")
+        console.print(f"[bold]Thabit v{CURRENT_VERSION}[/bold]")
         exit(0)
     if ctx.invoked_subcommand is None or show_menu:
         show_main_menu()
@@ -76,12 +77,16 @@ def eval(config, dataset, models):
         # validate config data
         if validate_config(config):
             # run evaluation
-            try:
-                has_models(models, config)
-                asyncio.run(run_evaluation(config, dataset, models))
-            except ValueError as e:
-                console.print(f"[red]Error: {str(e)}[/red]")
+            if models:
+                models = [model.strip() for model in models.split(",")]
+                try:
+                    has_models(models, config)
+                    asyncio.run(run_evaluation(config, dataset, models))
+                except ValueError as e:
+                    console.print(f"[red]Error: {str(e)}[/red]")
                 exit(1)
+            else:
+                asyncio.run(run_evaluation(config, dataset, []))
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         exit(1)

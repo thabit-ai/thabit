@@ -1,6 +1,7 @@
 # setup.py
 from setuptools import setup, find_packages
 import os
+from thabit.constants.platform import CURRENT_VERSION
 
 
 def read_requirements(file_path):
@@ -14,7 +15,7 @@ requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 setup(
     name="thabit",
-    version="0.2.2",
+    version=CURRENT_VERSION,
     packages=find_packages(),
     package_data={
         "thabit": ["templates/*"],
