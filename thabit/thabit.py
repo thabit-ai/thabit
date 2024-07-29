@@ -57,8 +57,8 @@ def cli(ctx, show_menu):
 @click.option(
     "--config", default="config.json", help="Path to the configuration JSON file."
 )
-@click.option("--dataset", required=True, help="Path to the dataset folder.")
-def eval(config, data):
+@click.option("--name", required=True, help="Dataset name.")
+def eval(config, name):
     """Evaluate LLMs using your own dataset."""
     try:
         # load config data
@@ -66,7 +66,7 @@ def eval(config, data):
         # validate config data
         if validate_config(config):
             # run evaluation
-            asyncio.run(run_evaluation(config, data))
+            asyncio.run(run_evaluation(config, name))
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         exit(1)
@@ -95,11 +95,11 @@ def config(config_path):
 
 # Create/Edit dataset
 @cli.command()
-@click.option("--dataset", required=True, help="Path to the dataset folder.")
+@click.option("--name", required=True, help="Dataset name.")
 @click.option("--version", help="Version of the dataset.")
-def dataset(dataset, version):
+def dataset(name, version):
     """Open the /dataset route in a web browser."""
-    url = f"http://127.0.0.1:3300/dataset?dataset={dataset}&version={version}"
+    url = f"http://127.0.0.1:3300/dataset?dataset={name}&version={version}"
 
     def run_app():
         app.run(debug=False, port=3300, use_reloader=False)
