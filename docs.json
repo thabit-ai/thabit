@@ -1,10 +1,14 @@
 {
   "name": "Thabit",
   "description": "Evaluate multiple LLM models with custom datasets.",
+  "theme": "#36B9B9",
   "logo": "https://thabit.sirv.com/Images/thabit-logo.png",
-  "logoDark": "https://thabit.sirv.com/Images/thabit-logo.png",
   "plausibleAnalytics": true,
   "github": "https://github.com/thabit-ai/thabit",
+  "anchors": [
+    { "title": "Homepage", "icon": "house", "link": "https://docs.thabit.ai" },
+    { "title": "Discord", "icon": "discord", "link": "https://discord.com/invite/5XQgnjXQ" }
+  ],
   "sidebar": [
       [
           "Getting Started",
@@ -24,67 +28,70 @@
           ]
       ],
       [
-          "Configuration",
-          [
-              [
-                  "Config File",
-                  "/config-file"
-              ]
-          ]
-      ],
-      [
-          "Datasets",
-          [
-              "Create a Dataset",
-              "/create-dataset"
-          ],
-          [
-              "Use a Dataset",
-              "/use-dataset"
-          ],
-          [
-              "Editing a Dataset",
-              "/editing-dataset"
-          ]
-      ],
-      [
-          "Supported Providers",
-          [
-              "OpenAI",
-              "/providers/openai"
-          ],
-          [
-              "Anthropic",
-              "/providers/anthropic"
-          ],
-          [
-              "DeepSeek",
-              "/providers/deepseek"
-          ],
-          [
-              "Cohere",
-              "/providers/cohere"
-          ],
-          [
-              "Gemini",
-              "/providers/gemini"
-          ],
-          [
-              "Fireworks AI",
-              "/providers/fireworks-ai"
-          ],
-          [
-              "OpenRouter",
-              "/providers/openrouter"
-          ],
-          [
-              "Together",
-              "/providers/together-ai"
-          ],
-          [
-              "Ollama",
-              "/providers/ollama"
-          ]
-      ]
+        "Configuration",
+        [
+            [
+                "Config File",
+                "/config-file"
+            ]
+        ]
+    ],
+    [
+        "Datasets",
+        [
+            [
+            "Create a Dataset",
+            "/create-dataset"
+        ],
+        [
+            "Use a Dataset",
+            "/use-dataset"
+        ],
+        [
+            "Editing a Dataset",
+            "/editing-dataset"
+        ]
+    ]
+    ],
+    [
+        "Supported Providers",
+        [
+            [
+            "OpenAI",
+            "/providers/openai"
+        ],
+        [
+            "Anthropic",
+            "/providers/anthropic"
+        ],
+        [
+            "DeepSeek",
+            "/providers/deepseek"
+        ],
+        [
+            "Cohere",
+            "/providers/cohere"
+        ],
+        [
+            "Gemini",
+            "/providers/gemini"
+        ],
+        [
+            "Fireworks AI",
+            "/providers/fireworks-ai"
+        ],
+        [
+            "OpenRouter",
+            "/providers/openrouter"
+        ],
+        [
+            "Together",
+            "/providers/together-ai"
+        ],
+        [
+            "Ollama",
+            "/providers/ollama"
+        ]]
+    ]
   ]
 }
