@@ -3,10 +3,6 @@
 </div>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://thabit.ai" target="_blank" style="margin: 2px;">
-    Home Page
-  </a>
-  &nbsp; | &nbsp;
   <a href="https://docs.thabit.ai" target="_blank" style="margin: 2px;">
     Docs
   </a>
@@ -18,9 +14,9 @@
 
 # Thabit
 
-Evaluate multiple LLM models with custom datasets.
+Open source platform to evaluate multiple LLM models with custom datasets.
 
-## How to run
+## Installation
 
 ```shell
 pip3 install thabit
@@ -38,9 +34,9 @@ pytest tests
 pip3 install -e .
 ```
 
-## Contribute
-
 ## Docs
+
+Visit [https://docs.thabit.ai](https://docs.thabit.ai)
 
 ## TODO:
 
