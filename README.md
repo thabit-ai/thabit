@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./docs/assets/img/thabit-logo.png" width="30%" alt=Thabit" />
+  <img src="https://docs.thabit.ai/assets/img/thabit-logo.png" width="30%" alt=Thabit" />
 </div>
 
 <div align="center" style="line-height: 1;">

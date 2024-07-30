@@ -1,0 +1,57 @@
+---
+title: Evaluating Anthropic models
+description: How to evaluate models from Anthropic with your datasets using Thabit.
+---
+
+# Evaluating Anthropic models
+
+## Config
+
+Ensure you have the following config in your `config.json` file:
+
+```json
+{
+  "models": [
+    {
+      "provider": "Anthropic",
+      "model": "claude-3-5-sonnet-20240620",
+      "model_name": "Claude 3.5 Sonnet",
+      "endpoint": "https://api.anthropic.com/v1/messages",
+      "api_key_env_var": "CLAUDE_API_KEY"
+    },
+    {
+      "provider": "Anthropic",
+      "model": "claude-3-opus-20240229",
+      "model_name": "Claude 3 Opus",
+      "endpoint": "https://api.anthropic.com/v1/messages",
+      "api_key_env_var": "CLAUDE_API_KEY"
+    },
+    {
+      "provider": "Anthropic",
+      "model": "claude-3-haiku-20240307",
+      "model_name": "Claude 3 Haiku",
+      "endpoint": "https://api.anthropic.com/v1/messages",
+      "api_key_env_var": "CLAUDE_API_KEY"
+    }
+  ],
+  "global_parameters": {
+    "temperature": 1,
+    "max_tokens": 200,
+    "top_p": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0
+  }
+}
+```
+
+Ensure you have the following config in your `.env` file:
+
+```
+CLAUDE_API_KEY=your_api_key
+```
+
+## Run evaluate
+
+```bash
+thabit eval --dataset-name=unicode-text --models=claude-3-5-sonnet-20240620,claude-3-opus-20240229,claude-3-haiku-20240307
+```

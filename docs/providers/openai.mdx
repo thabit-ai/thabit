@@ -1,0 +1,71 @@
+---
+title: Evaluating OpenAI models
+description: How to evaluate models from OpenAI with your datasets using Thabit.
+---
+
+# Evaluating OpenAI models
+
+## Config
+
+Ensure you have the following config in your `config.json` file:
+
+```json
+{
+  "models": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4o",
+      "model_name": "GPT4-o",
+      "endpoint": "https://api.openai.com/v1/chat/completions
+      "api_key_env_var": "OPENAI_API_KEY"
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4o-mini",
+      "model_name": "GPT4-o Mini",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "api_key_env_var": "OPENAI_API_KEY"
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4-turbo",
+      "model_name": "GPT4 Turbo",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "api_key_env_var": "OPENAI_API_KEY"
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4",
+      "model_name": "GPT4",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "api_key_env_var": "OPENAI_API_KEY"
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-3.5-turbo",
+      "model_name": "GPT3.5 Turbo",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "api_key_env_var": "OPENAI_API_KEY"
+    }
+  ],
+  "global_parameters": {
+    "temperature": 1,
+    "max_tokens": 200,
+    "top_p": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0
+  }
+}
+```
+
+Ensure you have the following config in your .env file:
+
+```
+OPENAI_API_KEY=your_api_key
+```
+
+Run evaluate
+
+```bash
+thabit eval --dataset-name=unicode-text --models=gpt-4o,gpt-4o-mini,gpt-4-turbo,gpt-4,gpt-3.5-turbo
+```

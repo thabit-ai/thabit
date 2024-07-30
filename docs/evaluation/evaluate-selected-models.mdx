@@ -1,48 +1,25 @@
-# Thabit
+---
+title: Evaluate Selected Models
+description: How to evaluate selected models from your configuration file and get a summary of the results using Thabit.
+---
 
-Evaluate multiple LLMs and find the best one for your use case.
+# Evaluate Selected Models
 
-## The story
+The `eval` command takes an optional `--models` option to evaluate selected models from your configuration file.
 
-With each new announcement of a new LLM, there will be lots of discussions and social media posts about how good/bad the new model is.
+The models should comma separated and should be the model id from the provider.
 
-The idea came to my mind after seeing a few posts from [@1littlecoder](https://x.com/1littlecoder) on X and [@AICodeKing](https://www.youtube.com/@AICodeKing) on Youtube comparing results of LLMs based on their own dataset.
+The summary will be displayed in the terminal, showing all pass and fail tests and also saved to a file in the `evals/{dataset_name}/` directory.
 
-I wanted to create a tool that would allow me to evaluate multiple LLMs and find the best one for my use case. And keeping the dataset for future checks and evaluations.
+## Example
 
-## How it works?
-
-1. Create a dataset (using UI).
-2. Add the LLMs you want to evaluate to the `config.json` file.
-3. Evaluate the LLMs using CLI and see results.
-
-## Demo
-
-![](https://docs.thabit.ai/assets/img/demo.gif)
-
-## Installation
+To evaluate the `unicode-text` dataset with the `gpt-4o`, `gpt-3.5-turbo`, and `deepseek-chat` models, you can use the following command:
 
 ```bash
-pip install thabit
+thabit eval --dataset-name=unicode-text --models=gpt-4o,gpt-3.5-turbo,deepseek-chat
 ```
 
-Ensure you have `.env` variable in the same folder, as well as `config.json` file.
-
-## How to run
-
-To evaluate all models in your config file:
-
-```bash
-thabit eval --dataset <dataset_name>
-```
-
-To evaluate `GPT-4-o` vs `DeepSeek-Chat` models, you can use:
-
-```bash
-thabit eval --dataset <dataset_name> --models gpt-4o,deepseek-chat
-```
-
-## Sample Config file
+## Config Example
 
 ```json
 {
