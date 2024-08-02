@@ -16,6 +16,10 @@
 
 Open source platform to evaluate multiple LLM models with custom datasets.
 
+## Demo
+![demo](https://github.com/user-attachments/assets/cd34047c-d193-4e85-8a2d-77d6bf92a104)
+
+
 ## Installation
 
 ```shell
